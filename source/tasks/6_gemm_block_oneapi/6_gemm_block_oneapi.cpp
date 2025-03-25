@@ -14,7 +14,7 @@ int main() {
   std::chrono::duration<double> seconds;
   std::cout << std::setprecision(3);
 
-  size_t n = 4096;
+  size_t n = 3072;
   
   std::vector<float> a = rng::float_vector(n * n, 0.1f, 0.9f);
   std::vector<float> b = rng::float_vector(n * n, 0.1f, 0.9f);

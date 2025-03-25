@@ -28,11 +28,11 @@ int main() {
 
   //==================================================================
 
-  // std::vector<float> mine =
+  std::vector<float> mine = GemmMklONEAPI(a_progrev, b_progrev, n_progrev, device);
   
   // time
   start = std::chrono::high_resolution_clock::now();
-  // mine = 
+  mine = GemmMklONEAPI(a, b, n, device);
   end = std::chrono::high_resolution_clock::now();
 
   seconds = end - start;

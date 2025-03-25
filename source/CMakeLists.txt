@@ -10,6 +10,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 
 find_package(OpenMP REQUIRED)
+find_package(MKL CONFIG REQUIRED)
 
 add_subdirectory(sample)
 add_subdirectory(rng)

@@ -1,7 +1,7 @@
 # CPU
 
 set(COMPILE_FLAGS "-fsycl -Wall")
-set(LINK_FLAGS "-fsycl")
+set(LINK_FLAGS "-fsycl ")
 
 # Nvidia Ampere 3050-3090 GPU
 
@@ -35,6 +35,16 @@ foreach(TASK_NUM_NAME IN LISTS TASKS_NUM_NAMES)
 
       set_target_properties(${TASK_NAME} PROPERTIES COMPILE_FLAGS "${COMPILE_FLAGS}")
       set_target_properties(${TASK_NAME} PROPERTIES LINK_FLAGS "${LINK_FLAGS}")
+
+      if(${TASK_NAME} MATCHES ".*mkl.*")
+        target_compile_options(${TASK_NAME} PUBLIC $<TARGET_PROPERTY:MKL::MKL_SYCL,INTERFACE_COMPILE_OPTIONS>)
+        target_include_directories(${TASK_NAME} PUBLIC $<TARGET_PROPERTY:MKL::MKL_SYCL,INTERFACE_INCLUDE_DIRECTORIES>)
+        target_link_libraries(${TASK_NAME} PUBLIC $<LINK_ONLY:MKL::MKL_SYCL>) 
+
+        target_compile_options(${TASK_NUM_NAME} PUBLIC $<TARGET_PROPERTY:MKL::MKL_SYCL,INTERFACE_COMPILE_OPTIONS>)
+        target_include_directories(${TASK_NUM_NAME} PUBLIC $<TARGET_PROPERTY:MKL::MKL_SYCL,INTERFACE_INCLUDE_DIRECTORIES>)
+        target_link_libraries(${TASK_NUM_NAME} PUBLIC $<LINK_ONLY:MKL::MKL_SYCL>)
+      endif()
 
       target_link_libraries(${TASK_NUM_NAME} PRIVATE 
         ${TASK_NAME}
